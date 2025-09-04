@@ -10,3 +10,6 @@ Route::get("/", LandingPage::class)->name('home');
 // Auth
 Route::get("/login", LoginPage::class)->name("login");
 Route::get("/register", RegisterPage::class)->name("register");
+
+// HomePage
+Route::get("/home", App\Livewire\Home\Index::class)->name('home.index');

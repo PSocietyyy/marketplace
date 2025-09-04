@@ -5,7 +5,7 @@
             Masuk ke Akun Anda
         </h2>
 
-        <form method="POST" action="#" class="mt-8 space-y-6" novalidate>
+        <form method="POST" wire:submit.prevent='login' class="mt-8 space-y-6" novalidate>
             @csrf
 
             {{-- Email --}}
@@ -13,6 +13,7 @@
                 type="email" 
                 name="email" 
                 label="Email" 
+                wire:model='email'
                 placeholder="Masukkan email anda" 
                 required 
                 :error="$errors->first('email')" 
@@ -25,6 +26,7 @@
                 type="password" 
                 name="password" 
                 label="Password" 
+                wire:model='password'
                 placeholder="Masukkan password anda" 
                 required 
                 :error="$errors->first('password')" 
@@ -32,7 +34,7 @@
 
             {{-- Remember Me --}}
             <div class="flex items-center">
-                <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                <input id="remember_me" wire:model='remember' name="remember" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
                 <label for="remember_me" class="ml-2 block text-sm text-gray-900">
                     Ingat saya
                 </label>
