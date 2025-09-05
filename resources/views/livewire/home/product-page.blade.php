@@ -96,6 +96,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         @forelse ($products as $produk)
             <div
+            wire:click='productDetail({{ $produk['id'] ?? 0 }})'
                 class="bg-white border border-gray-300 rounded-xl overflow-hidden hover-scale hover:border-gray-700 transition-all duration-200 group">
                 <div class="relative overflow-hidden">
                     @if (!empty($produk['image']))

@@ -169,6 +169,11 @@ class ProductPage extends Component
             $this->dispatch("alert", message: "Terjadi kesalahan: " . $e->getMessage(), type: "error");
         }
     }
+
+    public function productDetail($id)
+    {
+        return redirect()->route('home.product.detail', $id);
+    }
     
     public function render()
     {
