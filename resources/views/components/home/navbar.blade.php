@@ -16,22 +16,22 @@
 
             {{-- Desktop Navigation --}}
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#" 
-                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('home') ? 'text-gray-900' : '' }}">
+                <a href="{{ route('home.index') }}" 
+                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('home.index') ? 'text-gray-900' : '' }}">
                     Home
-                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('home') ? 'opacity-100' : '' }}"></span>
+                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('home.index') ? 'opacity-100' : '' }}"></span>
                 </a>
-                <a href="#" 
-                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('products.*') ? 'text-gray-900' : '' }}">
+                <a href="{{ route('home.product') }}" 
+                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('home.product') ? 'text-gray-900' : '' }}">
                     Product
-                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('products.*') ? 'opacity-100' : '' }}"></span>
+                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('home.product') ? 'opacity-100' : '' }}"></span>
                 </a>
                 <a href="#" 
                    class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('orders.*') ? 'text-gray-900' : '' }}">
                     Pesanan
                     <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('orders.*') ? 'opacity-100' : '' }}"></span>
                 </a>
-                <x-button variant="primary" href="#" size="sm" icon="ri-shopping-cart-line" iconPosition="left">
+                <x-button variant="primary" href="{{ route('home.cart') }}" size="sm" icon="ri-shopping-cart-line" iconPosition="left">
                     Keranjang
                 </x-button>
             </div>
@@ -111,13 +111,13 @@
          style="display: none;"
     >
         <div class="px-4 pt-2 pb-3 space-y-1">
-            <a href="#" 
+            <a href="{{ route('home.index') }}" 
                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('home') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-home-line mr-3"></i>
                 Home
             </a>
-            <a href="#" 
-               class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('products.*') ? 'text-gray-900 bg-gray-50' : '' }}">
+            <a href="{{ route('home.product') }}" 
+               class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('home.product') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-store-line mr-3"></i>
                 Product
             </a>
@@ -127,7 +127,7 @@
                 Pesanan
             </a>
 
-            <x-button variant="primary" href="#" size="sm" icon="ri-shopping-cart-line" iconPosition="left" class="w-full">
+            <x-button variant="primary" href="{{ route('home.cart') }}" size="sm" icon="ri-shopping-cart-line" iconPosition="left" class="w-full">
                 Keranjang
             </x-button>
         

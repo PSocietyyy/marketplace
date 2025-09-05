@@ -59,4 +59,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Umkn::class);
     }
+
+    public function carts()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

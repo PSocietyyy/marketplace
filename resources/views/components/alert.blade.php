@@ -13,7 +13,7 @@
     x-on:alert.window="open($event.detail.message, $event.detail.type)"
     x-show="show"
     x-transition
-    class="fixed top-5 right-5 max-w-xs rounded-md p-4 text-white shadow-lg"
+    class="fixed top-5 z-50 right-5 max-w-xs rounded-md p-4 text-white shadow-lg"
     :class="{
         'bg-green-500': type === 'success',
         'bg-red-600': type === 'error',
