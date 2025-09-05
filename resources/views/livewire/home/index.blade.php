@@ -40,8 +40,8 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             @forelse ($produkTerlaris as $produk)
-                <div
-                    class="bg-white border border-gray-300 rounded-xl overflow-hidden hover-scale hover:border-gray-700 transition-all duration-200 group">
+                <div wire:click='productDetail({{ $produk['id'] ?? 0 }})'
+                    class="bg-white border cursor-pointer border-gray-300 rounded-xl overflow-hidden hover-scale hover:border-gray-700 transition-all duration-200 group">
                     <div class="relative overflow-hidden">
                         @if (!empty($produk['image']))
                             <img src="{{ $produk['image'] }}" alt="{{ $produk['product_name'] }}"
@@ -80,15 +80,19 @@
                                 {{ $produk['stock'] }}</span>
                         </div>
 
-                        <button wire:click="addToCart({{ $produk['id'] ?? 0 }})" wire:loading.attr="disabled"
-                            wire:target="addToCart({{ $produk['id'] ?? 0 }})"
-                            class="w-full bg-gray-900 hover:bg-gray-800 disabled:bg-gray-500 disabled:cursor-not-allowed text-white font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center space-x-2 text-sm">
-                            <i class="ri-shopping-cart-line" wire:loading.class="animate-spin ri-loader-line"
-                                wire:target="addToCart({{ $produk['id'] ?? 0 }})"></i>
-                            <span wire:loading.remove wire:target="addToCart({{ $produk['id'] ?? 0 }})">Tambah ke
-                                Keranjang</span>
-                            <span wire:loading wire:target="addToCart({{ $produk['id'] ?? 0 }})">Menambahkan...</span>
-                        </button>
+                        <div class="flex flex-col md:flex-row items-center gap-2">
+                            <button wire:click="addToCart({{ $produk['id'] ?? 0 }})" wire:loading.attr="disabled"
+                                wire:target="addToCart({{ $produk['id'] ?? 0 }})"
+                                class="w-full bg-gray-900 hover:bg-gray-800 disabled:bg-gray-500 disabled:cursor-not-allowed text-white font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center space-x-2 text-sm">
+                                <span wire:loading.remove wire:target="addToCart({{ $produk['id'] ?? 0 }})">Beli</span>
+                            </button>
+                            <button wire:click="addToCart({{ $produk['id'] ?? 0 }})" wire:loading.attr="disabled"
+                                wire:target="addToCart({{ $produk['id'] ?? 0 }})"
+                                class="w-full border border-gray-600 hover:bg-green-600 hover:text-white text-black disabled:bg-gray-500 disabled:cursor-not-allowed font-medium py-2 rounded-lg transition duration-200 flex items-center justify-center space-x-2 text-sm">
+                                <i class="ri-shopping-cart-line" wire:loading.class="animate-spin ri-loader-line"
+                                    wire:target="addToCart({{ $produk['id'] ?? 0 }})"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             @empty
@@ -109,3 +113,4 @@
             </div>
         </div>
     </div>
+</div>

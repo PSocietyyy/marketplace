@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class CartPage extends Component
 {
     public $carts = [];
+    public $selected = [];
 
     public function mount()
     {
@@ -37,12 +38,21 @@ class CartPage extends Component
                     'stock' => $cart->product->stock ?? 0,
                 ];
             })->toArray();
+
+        // Jika belum ada selected, default pilih semua produk
+        if (empty($this->selected)) {
+            $this->selected = array_column($this->carts, 'id');
+        }
+    }
+
+    public function updatedSelected()
+    {
+        // Bisa ditambahkan validasi jika perlu
     }
 
     public function incrementQty($cartId)
     {
         $cart = Cart::find($cartId);
-        // Jika product ditemukan, dan product quantity masih kurang dari stok product
         if ($cart && $cart->qty < $cart->product->stock) {
             $cart->qty++;
             $cart->save();
@@ -53,7 +63,6 @@ class CartPage extends Component
     public function decrementQty($cartId)
     {
         $cart = Cart::find($cartId);
-        // Jika product ditemukan, dan product quantity harus lebih dari 1
         if ($cart && $cart->qty > 1) {
             $cart->qty--;
             $cart->save();
@@ -67,20 +76,35 @@ class CartPage extends Component
         if ($cart) {
             $cart->delete();
             $this->loadCart();
+
+            // Hapus dari selected jika ada
+            if (($key = array_search($cartId, $this->selected)) !== false) {
+                unset($this->selected[$key]);
+                $this->selected = array_values($this->selected);
+            }
         }
     }
 
     public function checkout()
     {
-        // Logika checkout (misal redirect ke halaman pembayaran)
-        session()->flash('message', 'Checkout berhasil! (Implementasi selanjutnya)');
-        // Contoh redirect:
-        // return redirect()->route('checkout.page');
+        if (empty($this->selected)) {
+            session()->flash('message', 'Pilih minimal satu produk untuk checkout.');
+            return;
+        }
+
+        // Contoh logika checkout hanya untuk produk yang dipilih
+        $selectedCarts = collect($this->carts)->whereIn('id', $this->selected);
+
+        // TODO: proses checkout sesuai kebutuhan, misal buat order, kurangi stok, dll
+
+        session()->flash('message', 'Checkout berhasil untuk ' . $selectedCarts->count() . ' produk! (Implementasi selanjutnya)');
     }
 
     public function render()
     {
-        $total = collect($this->carts)->sum(fn($item) => $item['price'] * $item['qty']);
+        $total = collect($this->carts)
+            ->filter(fn($item) => in_array($item['id'], $this->selected))
+            ->sum(fn($item) => $item['price'] * $item['qty']);
 
         return view('livewire.home.cart-page', [
             'total' => $total,

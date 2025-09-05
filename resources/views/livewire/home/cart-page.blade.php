@@ -15,9 +15,20 @@
             <p>Tambahkan produk ke keranjang untuk memulai belanja.</p>
         </div>
     @else
+        {{-- Checkbox Pilih Semua --}}
+        <div class="mb-4 flex items-center space-x-2">
+            <input type="checkbox" id="selectAll" wire:model="selectAll" wire:click="$toggle('selectAll')" />
+            <label for="selectAll" class="font-medium select-none cursor-pointer">Pilih Semua</label>
+        </div>
+
         <div class="space-y-6">
             @foreach ($carts as $item)
                 <div class="flex border border-gray-300 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
+                    {{-- Checkbox --}}
+                    <div class="flex items-center px-4">
+                        <input type="checkbox" wire:model="selected" value="{{ $item['id'] }}" class="w-5 h-5 cursor-pointer" />
+                    </div>
+
                     {{-- Gambar produk --}}
                     <div class="w-32 h-full bg-gray-100 flex items-center justify-center overflow-hidden">
                         @if ($item['image'])
@@ -60,7 +71,8 @@
             </div>
 
             <button wire:click="checkout" 
-                    class="w-full mt-4 bg-black hover:bg-gray-900 text-white font-semibold py-3 rounded-lg transition-colors duration-200">
+                    class="w-full mt-4 bg-black hover:bg-gray-900 text-white font-semibold py-3 rounded-lg transition-colors duration-200"
+                    @if(count($selected) === 0) disabled @endif>
                 Checkout
             </button>
         </div>
