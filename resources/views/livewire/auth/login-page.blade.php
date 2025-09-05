@@ -4,8 +4,7 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Masuk ke Akun Anda
         </h2>
-
-        <form method="POST" wire:submit.prevent='login' class="mt-8 space-y-6" novalidate>
+        <form wire:submit.prevent='login' class="mt-8 space-y-6" novalidate>
             @csrf
 
             {{-- Email --}}

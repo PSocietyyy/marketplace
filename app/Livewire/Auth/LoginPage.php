@@ -3,6 +3,7 @@
 namespace App\Livewire\Auth;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -13,7 +14,7 @@ class LoginPage extends Component
 {
     public $email, $password, $remember = false;
 
-    protected $validate = [
+    protected $rules = [
         'email' => 'required|email',
         'password' => 'required',
     ];
@@ -29,10 +30,19 @@ class LoginPage extends Component
         $this->validate();
 
         if(Auth::attempt(["email" => $this->email, "password" => $this->password], $this->remember)) {
+            Log::info("User login", [
+                "email" => $this->email,
+            ]);
             return redirect()->route("home.index");
         }
 
-        $this->dispatch("error", "Email atau password salah");
+        $this->dispatch("alert", message: "Email atau password salah", type: "error");
+        
+        // Log gagal login
+        Log::info("User gagal login", [
+            "email" => $this->email,
+            "ip" => request()->ip()
+        ]);
 
         return;
     }

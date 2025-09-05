@@ -13,6 +13,7 @@
 </head>
 <body>
     <x-home.navbar />
+    <x-alert />
     {{ $slot }}
     @livewireScripts
 </body>

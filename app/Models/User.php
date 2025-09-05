@@ -18,9 +18,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'birth_date',
+        'role',
         'email',
         'password',
+        'umkn_id'
     ];
 
     /**
@@ -44,5 +48,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function umkn()
+    {
+        return $this->belongsTo(Umkn::class);
     }
 }

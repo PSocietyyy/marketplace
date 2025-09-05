@@ -12,6 +12,7 @@
     />
 </head>
 <body>
+    <x-alert />
     {{ $slot }}
     @livewireScripts
 </body>

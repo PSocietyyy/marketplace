@@ -73,14 +73,7 @@
                                 Profile
                             </a>
                             <hr class="my-1 border-gray-100">
-                            <form method="POST">
-                                @csrf
-                                <button type="submit" 
-                                        class="flex items-center gap-3 w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors duration-200">
-                                    <i class="ri-logout-box-line"></i>
-                                    Logout
-                                </button>
-                            </form>
+                            <livewire:auth.logout-b-t-n />
                         </div>
                     </div>
                 @else
@@ -133,6 +126,10 @@
                 <i class="ri-list-check-line mr-3"></i>
                 Pesanan
             </a>
+
+            <x-button variant="primary" href="#" size="sm" icon="ri-shopping-cart-line" iconPosition="left" class="w-full">
+                Keranjang
+            </x-button>
         
         </div>
 
@@ -159,17 +156,8 @@
                         <i class="ri-user-settings-line mr-3"></i>
                         Profile
                     </a>
-                    <form method="POST">
-                        @csrf
-                        <button type="submit" 
-                        class="flex items-center w-full text-left px-3 py-2 text-base font-medium text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors duration-200">
-                        <i class="ri-logout-box-line mr-3"></i>
-                        Logout
-                    </button>
-                </form>
-                <x-button variant="primary" href="#" size="sm" icon="ri-shopping-cart-line" iconPosition="left">
-                    Keranjang
-                </x-button>
+                    <livewire:auth.logout-b-t-n />
+                
                 </div>
             @else
                 <div class="px-4 space-y-3">

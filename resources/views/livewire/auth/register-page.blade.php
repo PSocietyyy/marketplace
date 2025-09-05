@@ -1,29 +1,42 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
-        <a href="{{ route('home') }}" class="text-black hover:underline underline-offset-2"><i class="ri-arrow-left-line"></i> Kembali</a>
+    <div class="max-w-xl w-full space-y-8 bg-white p-8 rounded-lg shadow-lg">
+        <a href="{{ route('home') }}" class="text-black hover:underline underline-offset-2 flex items-center gap-1">
+            <i class="ri-arrow-left-line"></i> Kembali
+        </a>
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Buat Akun Baru
         </h2>
 
-        <form method="POST" action="#" class="mt-8 space-y-6" novalidate>
+        <form wire:submit.prevent='register' class="mt-8 space-y-6" novalidate>
             @csrf
 
-            {{-- Name --}}
-            <x-input 
-                type="text" 
-                name="name" 
-                label="Nama Lengkap" 
-                placeholder="Nama Anda" 
-                required 
-                :error="$errors->first('name')" 
-                value="{{ old('name') }}"
-                autofocus
-            />
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <x-input 
+                    type="text" 
+                    name="first_name" 
+                    label="Nama Depan" 
+                    wire:model='first_name'
+                    placeholder="Nama depan" 
+                    required 
+                    :error="$errors->first('first_name')" 
+                    value="{{ old('first_name') }}"
+                    autofocus
+                />
+                <x-input 
+                    type="text" 
+                    name="last_name" 
+                    wire:model='last_name'
+                    label="Nama Belakang" 
+                    placeholder="Nama belakang" 
+                    :error="$errors->first('last_name')" 
+                    value="{{ old('last_name') }}"
+                />
+            </div>
 
-            {{-- Email --}}
             <x-input 
                 type="email" 
                 name="email" 
+                wire:model='email'
                 label="Email" 
                 placeholder="you@example.com" 
                 required 
@@ -31,19 +44,42 @@
                 value="{{ old('email') }}"
             />
 
-            {{-- Password --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <x-input
+                    type="date"
+                    name="birth_date"
+                    wire:model='birth_date'
+                    label="Tanggal Lahir"
+                    placeholder="Tanggal Lahir"
+                    required
+                    :error="$errors->first('birth_date')"
+                    value="{{ old('birth_date') }}"
+                />
+                <x-input
+                    type="text"
+                    name="number_phone"
+                    wire:model='number_phone'
+                    label="Nomor Telepon"
+                    placeholder="Nomor Telepon"
+                    required
+                    :error="$errors->first('number_phone')"
+                    value="{{ old('number_phone') }}"
+                />
+            </div>
+
             <x-input 
                 type="password" 
                 name="password" 
+                wire:model='password'
                 label="Password" 
                 placeholder="Minimal 8 karakter" 
                 required 
                 :error="$errors->first('password')" 
             />
 
-            {{-- Password Confirmation --}}
             <x-input 
                 type="password" 
+                wire:model='password_confirmation'
                 name="password_confirmation" 
                 label="Konfirmasi Password" 
                 placeholder="Ulangi password Anda" 
