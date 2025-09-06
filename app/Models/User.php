@@ -80,4 +80,14 @@ class User extends Authenticatable
     {
         return $this->role === "user";
     }
+
+    public function isUmkn()
+    {
+        return $this->umkn_id !== null;
+    }
+
+    public function getFullName()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
 }

@@ -22,5 +22,9 @@ Route::middleware(["auth"])->group(function() {
     Route::get("/keranjang", CartPage::class)->name("home.cart")->middleware("isUser");
     Route::get("/product/{id}", ProductDetail::class)->name('home.product.detail')->middleware("isUser");
     Route::get("/orders", OrderPage::class)->name("home.order")->middleware("isUser");
+
+    Route::prefix("umkn")->group(function() {
+        Route::get("/", App\Livewire\Home\Umkn\Dashboard::class)->name("umkn.dashboard");
+    })->middleware("isUmkn");
 });
 

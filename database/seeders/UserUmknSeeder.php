@@ -23,7 +23,7 @@ class UserUmknSeeder extends Seeder
                 'last_name'  => 'Test',
                 'birth_date' => '1995-05-10',
                 'role'       => 'user',
-                'password'   => Hash::make('password123'),
+                'password'   => Hash::make('password'),
             ]
         );
 

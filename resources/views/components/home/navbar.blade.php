@@ -16,6 +16,13 @@
 
             {{-- Desktop Navigation --}}
             <div class="hidden md:flex items-center space-x-8">
+                @if (Auth::user()->isUmkn())
+                    <a href="{{ route('umkn.dashboard') }}" 
+                    class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('umkn.dashboard') ? 'text-gray-900' : '' }}">
+                        Dashboard
+                        <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('umkn.dashboard') ? 'opacity-100' : '' }}"></span>
+                    </a>
+                @endif
                 <a href="{{ route('home.index') }}" 
                    class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('home.index') ? 'text-gray-900' : '' }}">
                     Home
@@ -64,11 +71,6 @@
                         >
                             <a href="#" 
                                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200">
-                                <i class="ri-dashboard-line"></i>
-                                Dashboard
-                            </a>
-                            <a href="#" 
-                               class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                                 <i class="ri-user-settings-line"></i>
                                 Profile
                             </a>
@@ -111,6 +113,13 @@
          style="display: none;"
     >
         <div class="px-4 pt-2 pb-3 space-y-1">
+            @if (Auth::user()->isUmkn())
+                <a href="{{ route('umkn.dashboard') }}" 
+                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('umkn.dashboard') ? 'text-gray-900 bg-gray-50' : '' }}">
+                    <i class="ri-home-line mr-3"></i>
+                    Dashboard
+                </a>
+            @endif
             <a href="{{ route('home.index') }}" 
                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('home') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-home-line mr-3"></i>
@@ -146,11 +155,6 @@
                             <div class="text-sm text-gray-500">{{ Auth::user()->email }}</div>
                         </div>
                     </div>
-                    <a href="#" 
-                       class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200">
-                        <i class="ri-dashboard-line mr-3"></i>
-                        Dashboard
-                    </a>
                     <a href="#" 
                        class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                         <i class="ri-user-settings-line mr-3"></i>
