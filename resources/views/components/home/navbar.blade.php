@@ -26,10 +26,10 @@
                     Product
                     <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('home.product') ? 'opacity-100' : '' }}"></span>
                 </a>
-                <a href="#" 
-                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('orders.*') ? 'text-gray-900' : '' }}">
+                <a href="{{ route('home.order') }}" 
+                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('home.order') ? 'text-gray-900' : '' }}">
                     Pesanan
-                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('orders.*') ? 'opacity-100' : '' }}"></span>
+                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('home.order') ? 'opacity-100' : '' }}"></span>
                 </a>
                 <x-button variant="primary" href="{{ route('home.cart') }}" size="sm" icon="ri-shopping-cart-line" iconPosition="left">
                     Keranjang
@@ -42,7 +42,7 @@
                     {{-- User Dropdown --}}
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" 
-                                class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200">
+                                class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200">
                             <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
                                 <i class="ri-user-line text-gray-600"></i>
                             </div>
@@ -121,8 +121,8 @@
                 <i class="ri-store-line mr-3"></i>
                 Product
             </a>
-            <a href="#" 
-               class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('orders.*') ? 'text-gray-900 bg-gray-50' : '' }}">
+            <a href="{{ route('home.order') }}" 
+               class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('home.order') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-list-check-line mr-3"></i>
                 Pesanan
             </a>

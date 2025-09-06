@@ -96,9 +96,8 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
         @forelse ($products as $produk)
             <div
-            wire:click='productDetail({{ $produk['id'] ?? 0 }})'
-                class="bg-white border cursor-pointer border-gray-300 rounded-xl overflow-hidden hover-scale hover:border-gray-700 transition-all duration-200 group">
-                <div class="relative overflow-hidden">
+                class="bg-white border border-gray-300 rounded-xl overflow-hidden hover-scale hover:border-gray-700 transition-all duration-200 group">
+                <div class="relative overflow-hidden cursor-pointer" wire:click='productDetail({{ $produk['id'] ?? 0 }})'>
                     @if (!empty($produk['image']))
                         <img src="{{ $produk['image'] }}" alt="{{ $produk['product_name'] }}"
                             class="w-full h-36 sm:h-44 object-cover transition-transform duration-200 group-hover:scale-105 rounded-t-xl">
@@ -111,14 +110,14 @@
                     @endif
                 </div>
                 <div class="p-4 flex flex-col text-sm sm:text-base">
-                    <h3 class="font-semibold mb-1 group-hover:text-gray-800 truncate">{{ $produk['product_name'] }}
+                    <h3 class="font-semibold mb-1 group-hover:text-gray-800 truncate cursor-pointer" wire:click='productDetail({{ $produk['id'] ?? 0 }})'>{{ $produk['product_name'] }}
                     </h3>
 
                     {{-- Kategori dan UMKN --}}
                     <div class="flex flex-wrap gap-1 mb-1 text-xs text-gray-500">
                         @if (!empty($produk->category->name))
                             <span
-                                class="bg-gray-200 font-medium rounded-full px-2 py-0.5 truncate">{{ $produk->category->name }}</span>
+                                class="bg-gray-200 font-medium rounded-full px-2 py-0.5 truncate" >{{ $produk->category->name }}</span>
                         @endif
                         @if (!empty($produk->umkn->umkn_name))
                             <span

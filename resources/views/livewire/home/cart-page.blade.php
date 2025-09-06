@@ -17,7 +17,7 @@
     @else
         {{-- Checkbox Pilih Semua --}}
         <div class="mb-4 flex items-center space-x-2">
-            <input type="checkbox" id="selectAll" wire:model="selectAll" wire:click="$toggle('selectAll')" />
+            <input type="checkbox" id="selectAll" wire:model="selectAll" wire:click.live="$toggle('selectAll')" />
             <label for="selectAll" class="font-medium select-none cursor-pointer">Pilih Semua</label>
         </div>
 
@@ -26,7 +26,7 @@
                 <div class="flex border border-gray-300 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200">
                     {{-- Checkbox --}}
                     <div class="flex items-center px-4">
-                        <input type="checkbox" wire:model="selected" value="{{ $item['id'] }}" class="w-5 h-5 cursor-pointer" />
+                        <input type="checkbox" wire:model.live="selected" value="{{ $item['id'] }}" class="w-5 h-5 cursor-pointer" />
                     </div>
 
                     {{-- Gambar produk --}}

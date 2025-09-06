@@ -6,7 +6,12 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 #[Layout("layouts.home")]
 #[Title("Keranjang")]
@@ -88,16 +93,106 @@ class CartPage extends Component
     public function checkout()
     {
         if (empty($this->selected)) {
-            session()->flash('message', 'Pilih minimal satu produk untuk checkout.');
+            Log::warning("Checkout gagal: tidak ada produk yang dipilih", [
+                'user_id' => Auth::id(),
+                'selected' => $this->selected,
+            ]);
+            $this->dispatch("alert", message: "Pilih minimal satu product untuk checkout", type: "info");
             return;
         }
 
-        // Contoh logika checkout hanya untuk produk yang dipilih
+        $userId = Auth::id();
+        if (!$userId) {
+            Log::warning("Checkout gagal: user belum login", [
+                'selected' => $this->selected,
+            ]);
+            return redirect()->route('login');
+        }
+
         $selectedCarts = collect($this->carts)->whereIn('id', $this->selected);
 
-        // TODO: proses checkout sesuai kebutuhan, misal buat order, kurangi stok, dll
+        DB::beginTransaction();
 
-        session()->flash('message', 'Checkout berhasil untuk ' . $selectedCarts->count() . ' produk! (Implementasi selanjutnya)');
+        try {
+            // Hitung total harga
+            $totalPrice = $selectedCarts->sum(fn($item) => $item['price'] * $item['qty']);
+
+            // Buat order baru
+            $order = Order::create([
+                'user_id' => $userId,
+                'total_price' => $totalPrice,
+                'status' => 'pending',
+            ]);
+
+            Log::info("Order dibuat", [
+                'order_id' => $order->id,
+                'user_id' => $userId,
+                'total_price' => $totalPrice,
+            ]);
+
+            foreach ($selectedCarts as $item) {
+                $product = Product::find($item['product_id']);
+                if (!$product) {
+                    throw new \Exception("Produk dengan ID {$item['product_id']} tidak ditemukan.");
+                }
+
+                if ($product->stock < $item['qty']) {
+                    throw new \Exception("Stok produk '{$product->product_name}' tidak mencukupi.");
+                }
+
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'qty' => $item['qty'],
+                    'product_price' => $item['price'],
+                ]);
+
+                Log::info("Order item dibuat", [
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'qty' => $item['qty'],
+                    'price' => $item['price'],
+                ]);
+
+                // Update stok
+                $product->stock -= $item['qty'];
+                $product->save();
+
+                Log::info("Stok produk diperbarui", [
+                    'product_id' => $product->id,
+                    'sisa_stok' => $product->stock,
+                ]);
+
+                // Hapus item dari keranjang
+                Cart::find($item['id'])->delete();
+                Log::info("Item keranjang dihapus", [
+                    'cart_id' => $item['id'],
+                    'user_id' => $userId,
+                ]);
+            }
+
+            DB::commit();
+
+            $this->loadCart();
+            $this->selected = [];
+
+            Log::info("Checkout berhasil", [
+                'order_id' => $order->id,
+                'user_id' => $userId,
+            ]);
+
+            // session()->flash('message', "Checkout berhasil! Order ID: {$order->id}");
+            $this->dispatch("alert", message: "Checkout berhasil", type: "success");
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Checkout gagal", [
+                'user_id' => $userId,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            // session()->flash('message', 'Checkout gagal: ' . $e->getMessage());
+            $this->dispatch("alert", message: "Checkout gagal", type: "error");
+        }
     }
 
     public function render()
