@@ -50,7 +50,7 @@ class OrderPage extends Component
 
     public function cancelOrder($orderId)
     {
-        $order = Order::where('user_id', Auth::id())->where('id', $orderId)->first();
+        $order = Order::where('user_id', Auth::id())->where('id', $orderId)->with('items.product')->first();
 
         if (!$order) {
             session()->flash('message', 'Order tidak ditemukan.');
@@ -58,15 +58,24 @@ class OrderPage extends Component
         }
 
         if (in_array($order->status, ['pending', 'paid'])) {
+            // Tambah stok produk sesuai qty di order items
+            foreach ($order->items as $item) {
+                if ($item->product) {
+                    $item->product->stock += $item->qty;
+                    $item->product->save();
+                }
+            }
+
             $order->status = 'cancelled';
             $order->save();
 
-            session()->flash('message', 'Order berhasil dibatalkan.');
+            session()->flash('message', 'Order berhasil dibatalkan dan stok produk telah diperbarui.');
             $this->loadOrders();
         } else {
             session()->flash('message', 'Order tidak bisa dibatalkan pada status ini.');
         }
     }
+
 
     public function render()
     {
