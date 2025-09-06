@@ -54,6 +54,7 @@ class OrderPage extends Component
 
         if (!$order) {
             session()->flash('message', 'Order tidak ditemukan.');
+            $this->dispatch("alert", message: "Order tidak ditemukan", type: "warning");
             return;
         }
 
@@ -69,10 +70,10 @@ class OrderPage extends Component
             $order->status = 'cancelled';
             $order->save();
 
-            session()->flash('message', 'Order berhasil dibatalkan dan stok produk telah diperbarui.');
+            $this->dispatch("alert", message: "Order berhasil dibatalkan dan stok produk telah diperbarui.", type: "success");
             $this->loadOrders();
         } else {
-            session()->flash('message', 'Order tidak bisa dibatalkan pada status ini.');
+            $this->dispatch("alert", message: "Order tidak bisa dibatalkan pada status ini.", type: "error");
         }
     }
 

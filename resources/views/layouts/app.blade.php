@@ -10,8 +10,22 @@
         href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
         rel="stylesheet"
     />
+    <style>
+        @keyframes progress {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0%;
+            }
+        }
+
+        .animate-progress {
+            animation: progress 5s linear forwards;
+        }
+    </style>
 </head>
-<body>
+<body class="min-w-full min-h-screen">
     <x-alert />
     {{ $slot }}
     @livewireScripts

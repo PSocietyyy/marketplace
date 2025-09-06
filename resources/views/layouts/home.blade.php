@@ -44,10 +44,23 @@
         .hover-scale:hover {
             transform: translateY(-2px);
         }
+        
+        @keyframes progress {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0%;
+            }
+        }
+
+        .animate-progress {
+            animation: progress 5s linear forwards;
+        }
     </style>
 </head>
 
-<body>
+<body class="min-w-full min-h-screen">
     <x-home.navbar />
     <x-alert />
     {{ $slot }}
