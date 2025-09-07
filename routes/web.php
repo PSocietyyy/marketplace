@@ -25,6 +25,8 @@ Route::middleware(["auth"])->group(function() {
 
     Route::prefix("umkn")->group(function() {
         Route::get("/", App\Livewire\Home\Umkn\Dashboard::class)->name("umkn.dashboard");
+
+        Route::get("/products", App\Livewire\Home\Umkn\Product\Index::class)->name('home.umkn.product.index');
     })->middleware("isUmkn");
 });
 
