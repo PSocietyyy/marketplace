@@ -186,7 +186,7 @@
                                             {{ $product->product_name }}
                                         </h4>
                                         <p class="text-sm text-gray-500">
-                                            {{ $product->order_items_sum_qty ?? 0 }} terjual
+                                            {{ $product->total_qty ?? 0 }} terjual
                                         </p>
                                     </div>
                                     <div class="text-sm font-medium text-gray-900">

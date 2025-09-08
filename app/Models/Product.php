@@ -49,4 +49,10 @@ class Product extends Model
         }
         return asset('storage/'.$this->image);
     }
+
+    public function completed_order_items()
+    {
+        return $this->hasMany(OrderItem::class)
+                    ->whereHas('order', fn($q) => $q->where('status', 'completed'));
+    }
 }

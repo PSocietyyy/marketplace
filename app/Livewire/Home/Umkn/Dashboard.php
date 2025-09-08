@@ -51,11 +51,12 @@ class Dashboard extends Component
             ->take(5)
             ->get();
 
-        // Produk terlaris (berdasarkan quantity terjual)
-        $this->topProducts = Product::withSum('order_items', 'qty')
-            ->orderByDesc('order_items_sum_qty')
-            ->take(5)
-            ->get();
+        // Produk terlaris (berdasarkan quantity terjual)        
+        $this->topProducts = Product::withSum('completed_order_items as total_qty', 'qty')
+        ->orderByDesc('total_qty')
+        ->take(5)
+        ->get();
+        // dd($this->topProducts);
 
         // Statistik bulanan (6 bulan terakhir)
         $this->monthlyStats = collect(range(5, 0))->map(function ($monthsAgo) {
