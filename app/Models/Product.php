@@ -40,4 +40,13 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    // Helper mendapatkan path
+    public function getUrlImage()
+    {
+        if(str_starts_with($this->image, "https")) {
+            return $this->image;
+        }
+        return asset('storage/'.$this->image);
+    }
 }

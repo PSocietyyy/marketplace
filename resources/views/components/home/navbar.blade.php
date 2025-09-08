@@ -17,10 +17,10 @@
             {{-- Desktop Navigation --}}
             <div class="hidden md:flex items-center space-x-8">
                 @if (Auth::user()->isUmkn())
-                    <a href="{{ route('umkn.dashboard') }}" 
-                    class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('umkn.dashboard') ? 'text-gray-900' : '' }}">
+                    <a href="{{ route('home.umkn.dashboard') }}" 
+                    class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('home.umkn.*') ? 'text-gray-900' : '' }}">
                         Dashboard
-                        <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('umkn.dashboard') ? 'opacity-100' : '' }}"></span>
+                        <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('home.umkn.*') ? 'opacity-100' : '' }}"></span>
                     </a>
                 @endif
                 <a href="{{ route('home.index') }}" 
@@ -114,8 +114,8 @@
     >
         <div class="px-4 pt-2 pb-3 space-y-1">
             @if (Auth::user()->isUmkn())
-                <a href="{{ route('umkn.dashboard') }}" 
-                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('umkn.dashboard') ? 'text-gray-900 bg-gray-50' : '' }}">
+                <a href="{{ route('home.umkn.dashboard') }}" 
+                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('home.umkn.*') ? 'text-gray-900 bg-gray-50' : '' }}">
                     <i class="ri-home-line mr-3"></i>
                     Dashboard
                 </a>

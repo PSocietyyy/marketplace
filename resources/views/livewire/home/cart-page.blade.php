@@ -47,7 +47,7 @@
                                 <div class="flex-shrink-0">
                                     <div class="w-24 h-24 bg-gray-100 rounded-xl overflow-hidden">
                                         @if ($item['image'])
-                                            <img src="{{ $item['image'] }}" alt="{{ $item['product_name'] }}" 
+                                            <img src="{{ str_starts_with($item['image'], "https") ? $item['image'] : asset('storage/'.$item['image']) }}" alt="{{ $item['product_name'] }}" 
                                                  class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full flex items-center justify-center">

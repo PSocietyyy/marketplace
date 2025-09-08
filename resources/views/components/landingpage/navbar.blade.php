@@ -16,20 +16,20 @@
 
             {{-- Desktop Navigation --}}
             <div class="hidden md:flex items-center space-x-8">
-                <a href="#" 
-                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('home') ? 'text-gray-900' : '' }}">
+                <a href="#home" 
+                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group">
                     Home
-                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('home') ? 'opacity-100' : '' }}"></span>
+                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 "></span>
                 </a>
-                <a href="#" 
-                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('about') ? 'text-gray-900' : '' }}">
+                <a href="#about" 
+                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group">
                     About
-                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('about') ? 'opacity-100' : '' }}"></span>
+                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 "></span>
                 </a>
-                <a href="#" 
-                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group {{ request()->routeIs('contact') ? 'text-gray-900' : '' }}">
+                <a href="#contact" 
+                   class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group ">
                     Contact
-                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 {{ request()->routeIs('contact') ? 'opacity-100' : '' }}"></span>
+                    <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 "></span>
                 </a>
             </div>
 
@@ -115,17 +115,17 @@
          style="display: none;"
     >
         <div class="px-4 pt-2 pb-3 space-y-1">
-            <a href="#" 
+            <a href="#home" 
                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('home') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-home-line mr-3"></i>
                 Home
             </a>
-            <a href="#" 
+            <a href="#about" 
                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('about') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-information-line mr-3"></i>
                 About
             </a>
-            <a href="#" 
+            <a href="#contact" 
                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('contact') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-mail-line mr-3"></i>
                 Contact

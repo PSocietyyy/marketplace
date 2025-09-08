@@ -43,7 +43,7 @@
                 
                 <div class="relative overflow-hidden cursor-pointer" wire:click='productDetail({{ $produk['id'] ?? 0 }})'>
                     @if (!empty($produk['image']))
-                        <img src="{{ $produk['image'] }}" alt="{{ $produk['product_name'] }}"
+                        <img src="{{ str_starts_with($produk['image'], "https") ? $produk['image'] : asset('storage/' . $produk['image']) }}" alt="{{ $produk['product_name'] }}"
                             class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105">
                     @else
                         <div class="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-150 flex items-center justify-center group-hover:from-gray-200 group-hover:to-gray-250 transition-all duration-300">

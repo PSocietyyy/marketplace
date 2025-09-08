@@ -1,4 +1,4 @@
-<section class="relative py-14 lg:py-16 overflow-hidden">
+<section class="relative py-14 lg:py-16 overflow-hidden" id="home">
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">

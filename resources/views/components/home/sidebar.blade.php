@@ -34,7 +34,7 @@
             <ul class="space-y-2">
                 {{-- Dashboard --}}
                 <li>
-                    <a href="{{ route('umkn.dashboard') }}" 
+                    <a href="{{ route('home.umkn.dashboard') }}" 
                        class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 group {{ request()->routeIs('umkn.dashboard') ? 'bg-gray-50 text-gray-900' : '' }}">
                         <i class="ri-dashboard-line text-lg mr-3 text-gray-500 group-hover:text-gray-700 {{ request()->routeIs('umkn.dashboard') ? 'text-gray-700' : '' }}"></i>
                         <span>Dashboard</span>
@@ -43,16 +43,16 @@
 
                 {{-- Manajemen Produk --}}
                 <li>
-                    <a href="{{ route('home.product') }}" 
-                       class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 group {{ request()->routeIs('home.product') ? 'bg-gray-50 text-gray-900' : '' }}">
-                        <i class="ri-store-line text-lg mr-3 text-gray-500 group-hover:text-gray-700 {{ request()->routeIs('home.product') ? 'text-gray-700' : '' }}"></i>
+                    <a href="{{ route('home.umkn.product.index') }}" 
+                       class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 group {{ request()->routeIs('home.umkn.product.*') ? 'bg-gray-50 text-gray-900' : '' }}">
+                        <i class="ri-store-line text-lg mr-3 text-gray-500 group-hover:text-gray-700 {{ request()->routeIs('home.umkn.product.*') ? 'text-gray-700' : '' }}"></i>
                         <span>Manajemen Produk</span>
                     </a>
                 </li>
 
                 {{-- Manajemen Order --}}
                 <li>
-                    <a href="{{ route('home.order') }}" 
+                    <a href="{{ route('home.umkn.orders') }}" 
                        class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 group {{ request()->routeIs('home.order') ? 'bg-gray-50 text-gray-900' : '' }}">
                         <i class="ri-list-ordered text-lg mr-3 text-gray-500 group-hover:text-gray-700 {{ request()->routeIs('home.order') ? 'text-gray-700' : '' }}"></i>
                         <span>Manajemen Order</span>

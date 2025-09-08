@@ -5,7 +5,7 @@
             <div class="relative">
                 <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 p-6">
                     @if($product->image)
-                        <img src="{{ $product->image }}" 
+                        <img src="{{ $product->getUrlImage() }}" 
                              alt="{{ $product->product_name }}" 
                              class="w-full h-96 object-cover rounded-2xl">
                     @else

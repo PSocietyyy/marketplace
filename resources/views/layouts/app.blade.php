@@ -11,6 +11,9 @@
         rel="stylesheet"
     />
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
         @keyframes progress {
             from {
                 width: 100%;
@@ -29,5 +32,34 @@
     <x-alert />
     {{ $slot }}
     @livewireScripts
+
+    <script>
+        function scrollSpy() {
+            return {
+                active: '#home',
+                sections: ['#home', '#about', '#contact'],
+                init() {
+                    const observer = new IntersectionObserver(
+                        (entries) => {
+                            entries.forEach(entry => {
+                                if (entry.isIntersecting) {
+                                    this.active = `#${entry.target.id}`;
+                                }
+                            });
+                        },
+                        {
+                            threshold: 0.6 // 60% dari tinggi section terlihat baru dianggap aktif
+                        }
+                    );
+
+                    this.sections.forEach(id => {
+                        const el = document.querySelector(id);
+                        if (el) observer.observe(el);
+                    });
+                }
+            }
+        }
+        </script>
+
 </body>
 </html>

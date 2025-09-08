@@ -106,6 +106,24 @@ class Index extends Component
                     ->paginate($this->perPage);
     }
 
+
+    public function addProduct()
+    {
+        return redirect()->route('home.umkn.product.form.create');
+    }
+
+    public function editProduct($id)
+    {
+        return redirect()->route('home.umkn.product.form.edit', $id);
+    }
+
+    public function clearFilters()
+    {
+        $this->reset(['search', 'categoryFilter']);
+        $this->resetPage();
+    }
+
+
     public function render()
     {
         $products = $this->getProducts();
