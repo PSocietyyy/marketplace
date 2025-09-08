@@ -2,7 +2,11 @@
 
 namespace App\Livewire\Auth;
 
+use App\Models\Profile;
+use App\Models\User;
 use App\Services\Auth\RegisterService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -36,24 +40,45 @@ class RegisterPage extends Component
         "password.confirmed"    => "Password tidak cocok",
     ];
 
-    public function register(RegisterService $registerService)
+     public function register() 
     {
         $this->validate();
 
         try {
-            $registerService->register([
-                "first_name"    => $this->first_name,
-                "last_name"     => $this->last_name,
-                "email"         => $this->email,
-                "birth_date"    => $this->birth_date,
-                "number_phone"  => $this->number_phone,
-                "password"      => $this->password,
+            DB::beginTransaction();
+
+            $user = User::create([
+                "first_name" => $this->first_name,
+                "last_name" => $this->last_name,
+                "email" => $this->email,
+                "birth_date" => $this->birth_date,
+                "password" => bcrypt($this->password),
+                "role" => "user"
             ]);
 
-            return redirect()->route('login');
-        } catch (\Exception $e) {
+            Profile::create([
+                "user_id" => $user->id,
+                "number_phone" => $this->number_phone
+            ]);
+
+            DB::commit();
+
+            Log::info("User register", [
+                "email" => $this->email,
+            ]);
+
+        } catch(\Exception $e) {
+            DB::rollBack();
             $this->dispatch("alert", message: "Terjadi kesalahan!", type: "error");
+
+            Log::error("Register user error", [
+                "error" => $e->getMessage()
+            ]);
+
+            return;
         }
+
+        return redirect()->route('login');
     }
 
     public function render()

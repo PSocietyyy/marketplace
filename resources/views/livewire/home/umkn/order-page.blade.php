@@ -155,7 +155,7 @@
                                                     <div class="flex-shrink-0">
                                                         <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
                                                             @if ($item->product && $item->product->image)
-                                                                <img src="{{ $item->product->image }}"
+                                                                <img src="{{ $item->product->getUrlImage() }}"
                                                                     alt="{{ $item->product->product_name ?? 'Produk' }}"
                                                                     class="w-full h-full object-cover">
                                                             @else

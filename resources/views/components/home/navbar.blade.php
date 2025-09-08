@@ -69,7 +69,7 @@
                              class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50"
                              style="display: none;"
                         >
-                            <a href="#" 
+                            <a href="{{ route('home.profile') }}" 
                                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200">
                                 <i class="ri-user-settings-line"></i>
                                 Profile
@@ -155,7 +155,7 @@
                             <div class="text-sm text-gray-500">{{ Auth::user()->email }}</div>
                         </div>
                     </div>
-                    <a href="#" 
+                    <a href="{{ route('home.profile') }}" 
                        class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200">
                         <i class="ri-user-settings-line mr-3"></i>
                         Profile

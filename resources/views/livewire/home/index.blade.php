@@ -19,11 +19,12 @@
             @foreach ($umknRekomendasi as $umkn)
                 <div class="bg-white rounded-2xl p-8 text-center shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
                     <div class="relative mb-6">
-                        <img src="{{ $umkn['logo'] }}" alt="{{ $umkn['umkn_name'] }}"
+                        <img src="{{ asset("storage/" . $umkn['logo']) }}" alt="{{ $umkn['umkn_name'] }}"
                             class="w-20 h-20 object-cover rounded-full mx-auto ring-4 ring-gray-50">
                     </div>
                     <h3 class="text-xl font-medium mb-3 text-gray-900">{{ $umkn['umkn_name'] }}</h3>
                     <p class="text-gray-600 text-sm leading-relaxed">{{ $umkn['description'] }}</p>
+                    <p class="text-gray-600 text-sm leading-relaxed">{{ $umkn["total_product_terjual"] > 0 ? $umkn["total_product_terjual"] : 0 }} Produk Terjual</p>
                 </div>
             @endforeach
         </div>

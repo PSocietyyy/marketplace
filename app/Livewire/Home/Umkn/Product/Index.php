@@ -117,6 +117,11 @@ class Index extends Component
         return redirect()->route('home.umkn.product.form.edit', $id);
     }
 
+    public function productDetail($id)
+    {
+        return redirect()->route('home.umkn.product.detail', $id);
+    }
+
     public function clearFilters()
     {
         $this->reset(['search', 'categoryFilter']);

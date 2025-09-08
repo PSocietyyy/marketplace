@@ -2,10 +2,14 @@
 
 namespace App\Livewire\Home\Umkn\Product;
 
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
 
+#[Layout("layouts.umkn")]
+#[Title("Detail Product")]
 class Detail extends Component
 {
     public Product $product;

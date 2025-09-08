@@ -39,12 +39,15 @@ class ProductForm extends Component
         'category_id' => 'required|exists:categories,id',
     ];
 
-    public function mount($id)
+    public function mount($id=null)
     {
         $this->categories = Category::all();
-        $this->edit_id = $id;
-        $this->getDataById();
-        $this->is_edit_mode = true;
+        if($id)
+        {
+            $this->edit_id = $id;
+            $this->getDataById();
+            $this->is_edit_mode = true;
+        }
     }
 
     public function getDataById()
