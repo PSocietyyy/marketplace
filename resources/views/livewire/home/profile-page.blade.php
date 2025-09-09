@@ -35,7 +35,7 @@
                                         @if($new_avatar)
                                             <img src="{{ $new_avatar->temporaryUrl() }}" alt="Preview" class="w-full h-full object-cover">
                                         @elseif($avatar)
-                                            <img src="{{ Storage::url($avatar) }}" alt="Avatar" class="w-full h-full object-cover">
+                                            <img src="{{ asset('storage/' . $avatar) }}" alt="Avatar" class="w-full h-full object-cover">
                                         @else
                                             <div class="w-full h-full flex items-center justify-center">
                                                 <i class="ri-user-line text-2xl text-gray-400"></i>

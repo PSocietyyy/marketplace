@@ -77,6 +77,40 @@ class OrderPage extends Component
         }
     }
 
+    public function updateOrderStatusCompleted($orderId)
+    {
+        $order = Order::where('user_id', Auth::id())->where('id', $orderId)->with('items.product')->first();
+
+        if (!$order) {
+            session()->flash('message', 'Order tidak ditemukan.');
+            $this->dispatch("alert", message: "Order tidak ditemukan", type: "warning");
+            return;
+        }
+
+        // Tambah stok produk sesuai qty di order items
+        foreach ($order->items as $item) {
+            if ($item->product) {
+                $item->product->stock += $item->qty;
+                $item->product->save();
+            }
+        }
+
+        $order->status = 'completed';
+        $order->save();
+
+        $this->dispatch("alert", message: "Order telah diterima.", type: "success");
+        $this->loadOrders();
+    }
+
+    public function productDetail($id)
+    {
+        if($id)
+        {
+            return redirect()->route('home.product.detail', $id);
+        }
+        $this->dispatch("alert", "Product tidak ditemukan", "warning");
+    }
+
 
     public function render()
     {

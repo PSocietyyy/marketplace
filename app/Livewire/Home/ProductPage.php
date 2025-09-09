@@ -175,6 +175,7 @@ class ProductPage extends Component
         return redirect()->route('home.product.detail', $id);
     }
     
+    
     public function render()
     {
         return view('livewire.home.product-page');

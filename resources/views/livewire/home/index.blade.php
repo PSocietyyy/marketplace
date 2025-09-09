@@ -60,7 +60,7 @@
                             {{ $produk['product_name'] }}
                         </h3>
                         
-                        <div class="flex flex-wrap gap-2 mb-3">
+                        <div class="flex flex-wrap items-center gap-2 mb-3">
                             @if (!empty($produk->category->name))
                                 <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full font-medium">
                                     {{ $produk->category->name }}
@@ -70,6 +70,12 @@
                                 <span class="bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full font-medium">
                                     {{ $produk->umkn->umkn_name }}
                                 </span>
+                            @endif
+                            @if (!empty($produk->total_sold))
+                            <span class="bg-indigo-50 text-indigo-700 text-xs font-medium px-3 py-1 rounded-full">
+                                Terjual: <span class="text-gray-900 font-semibold">{{ $produk->total_sold }}</span>
+                            </span>
+                                
                             @endif
                         </div>
                     </div>

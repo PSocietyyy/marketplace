@@ -71,7 +71,11 @@
                     <div class="px-4 py-2">
                         <div class="flex items-center">
                             <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3">
-                                <i class="ri-user-line text-gray-600 text-sm"></i>
+                                @if (Auth::user()->profile?->photo)
+                                    <img src="{{ asset('storage/' . Auth::user()->profile?->photo) }}" alt="{{ Auth::user()->name }}">
+                                @else
+                                    <i class="ri-user-line text-gray-600 text-sm"></i>
+                                @endif
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="text-sm font-medium text-gray-900 truncate">{{ Auth::user()->getFullName() }}</p>

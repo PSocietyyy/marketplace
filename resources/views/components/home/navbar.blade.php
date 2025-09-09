@@ -51,7 +51,11 @@
                         <button @click="open = !open" 
                                 class="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors duration-200">
                             <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                                <i class="ri-user-line text-gray-600"></i>
+                                @if (Auth::user()->profile?->photo)
+                                    <img src="{{ asset('storage/' . Auth::user()->profile->photo) }}" alt="{{ Auth::user()->name }}">
+                                @else
+                                    <i class="ri-user-line text-gray-600"></i>
+                                @endif
                             </div>
                             <span>{{ Auth::user()->name }}</span>
                             <i class="ri-arrow-down-s-line transition-transform duration-200" :class="{ 'rotate-180': open }"></i>

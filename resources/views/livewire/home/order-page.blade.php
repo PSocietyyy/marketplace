@@ -6,14 +6,6 @@
             <p class="text-gray-600">Kelola dan pantau pesanan Anda</p>
         </div>
 
-        @if (session()->has('message'))
-            <div class="mb-8 bg-white border border-green-200 rounded-2xl p-4">
-                <div class="flex items-center space-x-3">
-                    <i class="ri-check-line text-xl text-green-600"></i>
-                    <span class="text-green-800">{{ session('message') }}</span>
-                </div>
-            </div>
-        @endif
 
         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-8">
             <div class="flex items-center space-x-4">
@@ -47,7 +39,7 @@
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex-grow">
                                     <div class="flex items-center space-x-3 mb-2">
-                                        <h3 class="text-lg font-semibold text-gray-900">Order #{{ $order->id }}</h3>
+                                        <h3 class="text-lg font-semibold text-gray-900">Order #{{ $order->order_code }}</h3>
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
                                             @if($order->status === 'pending') bg-yellow-100 text-yellow-800
                                             @elseif($order->status === 'paid') bg-blue-100 text-blue-800
@@ -55,7 +47,7 @@
                                             @elseif($order->status === 'completed') bg-green-100 text-green-800
                                             @elseif($order->status === 'cancelled') bg-red-100 text-red-800
                                             @endif">
-                                            {{ ucfirst($order->status) }}
+                                            {{ ucfirst($order->status == "completed" ? "Diterima" : $order->status) }}
                                         </span>
                                     </div>
                                     <p class="text-gray-600 text-sm mb-2">
@@ -73,6 +65,14 @@
                                                 title="Batalkan Order">
                                             <i class="ri-close-line text-sm mr-1"></i>
                                             Cancel
+                                        </button>
+
+                                    @elseif ($order->status == "shipped")
+                                        <button wire:click="updateOrderStatusCompleted({{ $order->id }})"
+                                            class="px-3 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-medium transition-colors duration-200 border border-green-200 text-xs"
+                                            title="Selesaikan Order">
+                                            <i class="ri-check-double-line text-sm mr-1"></i>
+                                            Diterima
                                         </button>
                                     @endif
 
@@ -102,7 +102,7 @@
                                                     <div class="flex-shrink-0">
                                                         <div class="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden">
                                                             @if ($item->product && $item->product->image)
-                                                                <img src="{{ $item->product->image }}" 
+                                                                <img src="{{ $item->product->getUrlImage() }}" 
                                                                      alt="{{ $item->product->product_name ?? 'Produk' }}" 
                                                                      class="w-full h-full object-cover">
                                                             @else
@@ -114,9 +114,9 @@
                                                     </div>
                                                     
                                                     <div class="flex-grow min-w-0">
-                                                        <h5 class="font-medium text-gray-900 mb-2">
+                                                        <button class="font-medium cursor-pointer text-gray-900 hover:text-gray-600 transition duration-200 ease-in-out mb-2" wire:click='productDetail({{ $item->product->id }})'>
                                                             {{ $item->product->product_name ?? 'Produk tidak ditemukan' }}
-                                                        </h5>
+                                                        </button>
                                                         
                                                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-gray-600">
                                                             <div>

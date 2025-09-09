@@ -50,7 +50,7 @@
                         <p class="text-3xl font-bold text-gray-900 mt-2">{{ number_format($totalOrders) }}</p>
                         <div class="flex items-center mt-2">
                             <span class="text-sm text-gray-500">
-                                Semua pesanan
+                                Pesanan yang belum diterima.
                             </span>
                         </div>
                     </div>

@@ -26,9 +26,9 @@
                     About
                     <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 "></span>
                 </a>
-                <a href="#contact" 
+                <a href="#faq" 
                    class="relative text-gray-600 hover:text-gray-900 px-3 py-2 text-sm font-medium transition-all duration-200 group ">
-                    Contact
+                    Pertanyaan
                     <span class="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-gray-900 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 "></span>
                 </a>
             </div>
@@ -125,10 +125,10 @@
                 <i class="ri-information-line mr-3"></i>
                 About
             </a>
-            <a href="#contact" 
+            <a href="#faq" 
                class="flex items-center px-3 py-2 text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-colors duration-200 {{ request()->routeIs('contact') ? 'text-gray-900 bg-gray-50' : '' }}">
                 <i class="ri-mail-line mr-3"></i>
-                Contact
+                Pertanyaan
             </a>
         </div>
 

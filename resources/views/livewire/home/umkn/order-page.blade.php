@@ -48,7 +48,7 @@
                             <div class="flex items-start justify-between mb-4">
                                 <div class="flex-grow">
                                     <div class="flex items-center space-x-3 mb-2">
-                                        <h3 class="text-lg font-semibold text-gray-900">Order #{{ $order->id }}</h3>
+                                        <h3 class="text-lg font-semibold text-gray-900">Order #{{ $order->order_code }}</h3>
                                         <span
                                             class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
                                             @if ($order->status === 'pending') bg-yellow-100 text-yellow-800
@@ -56,14 +56,14 @@
                                             @elseif($order->status === 'shipped') bg-indigo-100 text-indigo-800
                                             @elseif($order->status === 'completed') bg-green-100 text-green-800
                                             @elseif($order->status === 'cancelled') bg-red-100 text-red-800 @endif">
-                                            {{ ucfirst($order->status) }}
+                                            {{ ucfirst($order->status == "completed" ? "Diterima" : $order->status) }}
                                         </span>
                                     </div>
 
                                     <div class="mb-3">
                                         <p class="text-gray-600 text-sm">
                                             <i class="ri-user-line mr-1"></i>
-                                            {{ $order->user->profile->full_name ?? $order->user->name }}
+                                            {{ $order->user->first_name . " " . $order->user->last_name }}
                                         </p>
                                         @if ($order->user->profile && $order->user->profile->phone)
                                             <p class="text-gray-600 text-sm">
@@ -114,11 +114,11 @@
                                             class="px-3 py-2 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-medium transition-colors duration-200 border border-green-200 text-xs"
                                             title="Selesaikan Order">
                                             <i class="ri-check-double-line text-sm mr-1"></i>
-                                            Selesai
+                                            Diterima
                                         </button>
                                     @elseif($order->status === 'completed')
                                         <span
-                                            class="px-3 py-2 bg-green-100 text-green-800 rounded-xl font-medium text-xs">
+                                            class="px-3 py-2 bg-indigo-100 text-indigo-800 rounded-xl font-medium text-xs">
                                             <i class="ri-check-double-line text-sm mr-1"></i>
                                             Selesai
                                         </span>

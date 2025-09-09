@@ -32,10 +32,14 @@ class Dashboard extends Component
     public function loadDashboardData()
     {
         // Total produk
-        $this->totalProducts = Product::count();
+        $this->totalProducts = Product::where("umkn_id", Auth::user()->umkn_id)->count();
 
         // Total pesanan
-        $this->totalOrders = Order::count();
+        $this->totalOrders = Order::whereNotIn('status', ['completed', 'cancelled'])
+            ->whereHas('items.product', function ($q) {
+                $q->where('umkn_id', Auth::user()->umkn_id);
+            })
+            ->count();
 
         // Total revenue
         $this->totalRevenue = DB::table('orders')
@@ -53,6 +57,7 @@ class Dashboard extends Component
 
         // Produk terlaris (berdasarkan quantity terjual)        
         $this->topProducts = Product::withSum('completed_order_items as total_qty', 'qty')
+        ->where("umkn_id", Auth::user()->umkn_id)
         ->orderByDesc('total_qty')
         ->take(5)
         ->get();

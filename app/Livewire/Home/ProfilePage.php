@@ -59,7 +59,7 @@ class ProfilePage extends Component
             $this->full_name = $user->profile->full_name;
             $this->phone = $user->profile->number_phone;
             $this->address = $user->profile->address;
-            $this->avatar = $user->profile->avatar;
+            $this->avatar = $user->profile->photo;
         }
 
         // Load UMKN data
@@ -108,9 +108,9 @@ class ProfilePage extends Component
             'last_name' => 'required|string|max:255',
             'birth_date' => 'nullable|date',
             'full_name' => 'nullable|string|max:255',
-            'number_phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:500',
-            'new_avatar' => 'nullable|image|max:2048'
+            'avatar' => 'nullable|image|max:2048'
         ]);
 
         $user = Auth::user();
@@ -137,9 +137,9 @@ class ProfilePage extends Component
             ['user_id' => $user->id],
             [
                 'full_name' => $this->full_name,
-                'phone' => $this->phone,
+                'number_phone' => $this->phone,
                 'address' => $this->address,
-                'avatar' => $avatarPath,
+                'photo' => $avatarPath,
             ]
         );
 
