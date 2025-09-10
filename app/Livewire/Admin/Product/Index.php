@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Livewire\Home\Umkn\Product;
+namespace App\Livewire\Admin\Product;
 
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\Product;
-use App\Models\Category;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
-#[Layout("layouts.umkn")]
-#[Title("Manajemen product")]
+#[Layout("layouts.admin")]
+#[Title("Manajemen Product UMKN")]
 class Index extends Component
 {
     use WithPagination;
@@ -32,7 +31,7 @@ class Index extends Component
         'search' => ['except' => ''],
         'categoryFilter' => ['except' => ''],
         'sortBy' => ['except' => 'created_at'],
-        'sortDirection' => ['except' => 'desc'],
+        'sortDirection' => ['except' => 'desc']
     ];
 
     public function mount()
@@ -52,7 +51,7 @@ class Index extends Component
 
     public function sortBy($field)
     {
-        if ($this->sortBy === $field) {
+        if($this->sortBy === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
             $this->sortBy = $field;
@@ -69,8 +68,8 @@ class Index extends Component
 
     public function deleteProduct()
     {
-        if ($this->productToDelete) {
-            // Delete image if exists
+        if($this->productToDelete) {
+            // Delete Image if exists
             if ($this->productToDelete->image) {
                 Storage::disk('public')->delete($this->productToDelete->image);
             }
@@ -91,50 +90,40 @@ class Index extends Component
 
     public function getProducts()
     {
-        $query = Product::with(['category'])
-            ->where('umkn_id', Auth::user()->umkn_id);
+        $query = Product::with(['category', 'umkn']);
 
-        if ($this->search) {
-            $query->where('product_name', 'like', '%' . $this->search . '%');
+        if($this->search) {
+            $query->where('product_name', 'like', '%'.$this->search.'%')
+            ->orWhereHas('umkn', function($umknQuery) {
+                $umknQuery->where('umkn_name', 'like', '%'.$this->search.'%');
+            });
         }
 
-        if ($this->categoryFilter) {
+        if($this->categoryFilter) {
             $query->where('category_id', $this->categoryFilter);
         }
 
         return $query->orderBy($this->sortBy, $this->sortDirection)
-                    ->paginate($this->perPage);
+            ->paginate($this->perPage);
     }
 
-
-    public function addProduct()
-    {
-        return redirect()->route('home.umkn.product.form.create');
-    }
-
-    public function editProduct($id)
-    {
-        return redirect()->route('home.umkn.product.form.edit', $id);
-    }
 
     public function productDetail($id)
     {
-        return redirect()->route('home.umkn.product.detail', $id);
+        return redirect()->route('admin.product.detail', $id);
     }
 
     public function clearFilters()
     {
         $this->reset(['search', 'categoryFilter']);
-        $this->resetPage();
     }
 
 
     public function render()
     {
         $products = $this->getProducts();
-        
-        return view('livewire.home.umkn.product.index', [
-            'products' => $products,
+        return view('livewire.admin.product.index', [
+            'products' => $products
         ]);
     }
 }

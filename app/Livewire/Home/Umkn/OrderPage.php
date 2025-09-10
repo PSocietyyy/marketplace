@@ -61,33 +61,21 @@ class OrderPage extends Component
         }
     }
 
-    public function updateOrderStatus($orderId, $newStatus)
+    public function updateOrderStatusAdmin($orderId, $newStatus)
     {
-        $umknId = Auth::user()->umkn_id;
-        
-        if (!$umknId) {
-            $this->dispatch("alert", message: "Anda tidak memiliki akses UMKN.", type: "error");
-            return;
-        }
-
-        $order = Order::with(['items.product'])
-            ->whereHas('items.product', function ($q) use ($umknId) {
-                $q->where('umkn_id', $umknId);
-            })
-            ->where('id', $orderId)
-            ->first();
+        $order = Order::with(['items.product'])->find($orderId);
 
         if (!$order) {
-            $this->dispatch("alert", message: "Order tidak ditemukan atau bukan milik UMKN Anda.", type: "error");
+            $this->dispatch("alert", message: "Order tidak ditemukan.", type: "error");
             return;
         }
 
-        // Validasi transisi status yang dibolehkan
+        // Transisi status yang dibolehkan untuk admin
         $allowedTransitions = [
-            'pending' => ['paid', 'cancelled'],
-            'paid' => ['shipped', 'cancelled'],
-            'shipped' => ['completed'],
-            'completed' => [], // Tidak bisa diubah lagi
+            'pending' => ['paid', 'shipped', 'completed', 'cancelled'],
+            'paid' => ['shipped', 'completed', 'cancelled'],
+            'shipped' => ['completed', 'cancelled'],
+            'completed' => ['cancelled'], // Admin bisa membatalkan, tapi stok tidak dikembalikan
             'cancelled' => [] // Tidak bisa diubah lagi
         ];
 
@@ -96,8 +84,10 @@ class OrderPage extends Component
             return;
         }
 
-        // Handle stock restoration jika dibatalkan
-        if ($newStatus === 'cancelled') {
+        $previousStatus = $order->status;
+
+        // Handle stok jika dibatalkan sebelum dikirim
+        if ($newStatus === 'cancelled' && in_array($previousStatus, ['pending', 'paid'])) {
             foreach ($order->items as $item) {
                 if ($item->product) {
                     $item->product->stock += $item->qty;
@@ -113,13 +103,14 @@ class OrderPage extends Component
             'paid' => 'Order berhasil dikonfirmasi sebagai telah dibayar.',
             'shipped' => 'Order berhasil diubah menjadi dikirim.',
             'completed' => 'Order berhasil diselesaikan.',
-            'cancelled' => 'Order berhasil dibatalkan dan stok telah dikembalikan.'
+            'cancelled' => 'Order berhasil dibatalkan.'
         ];
 
         $message = $statusMessages[$newStatus] ?? 'Status order berhasil diperbarui.';
         $this->dispatch("alert", message: $message, type: "success");
         $this->loadOrders();
     }
+
 
     public function render()
     {

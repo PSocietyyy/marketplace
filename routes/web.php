@@ -37,3 +37,12 @@ Route::middleware(["auth"])->group(function() {
     })->middleware("isUmkn");
 });
 
+
+Route::prefix("admin")->as("admin.")->middleware("isAdmin")->group(function () {
+    Route::get("/", App\Livewire\Admin\Dashboard::class)->name('dashboard');
+    Route::get("/products", App\Livewire\Admin\Product\Index::class)->name('product.index');
+    Route::get("/products/{id}", App\Livewire\Admin\Product\Detail::class)->name('product.detail');
+    
+    // Order
+    Route::get("/orders", App\Livewire\Admin\OrderPage::class)->name('orders');
+});
