@@ -32,13 +32,25 @@ class Index extends Component
             ->get();
 
 
-        $this->produkTerlaris = Product::with(['umkn', 'category'])
-        ->select('products.*', DB::raw('SUM(order_items.qty) as total_sold'))
-        ->join('order_items', 'products.id', '=', 'order_items.product_id')
-        ->groupBy('products.id')
-        ->orderByDesc('total_sold')
-        ->take(5)
-        ->get();
+            $min_rating = 3.5;
+            $this->produkTerlaris = Product::with(['umkn', 'category'])
+                ->select('products.*', DB::raw('SUM(order_items.qty) as total_sold'))
+                ->join('order_items', 'products.id', '=', 'order_items.product_id')
+                ->groupBy('products.id')
+                ->withCount([ // ngitung total review
+                    'reviews as total_reviews' => function ($q) {
+                        $q->whereNull('parent_id');
+                    }
+                ])
+                ->withAvg([ // rata rata rating
+                    'reviews as average_rating' => function ($q) {
+                        $q->whereNull('parent_id');
+                    }
+                ], 'rating')
+                ->having('average_rating', '>=', $min_rating) // rating minimal
+                ->orderByDesc('total_sold')
+                ->take(5)
+                ->get();
     }
 
     public function productDetail($id)

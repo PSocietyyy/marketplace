@@ -137,6 +137,20 @@
                         </span>
                     </div>
 
+                    {{-- Rating + jumlah ulasan --}}
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i
+                                        class="ri-star{{ $i <= round($produk->reviews_avg_rating) ? '-fill text-yellow-400' : '-line text-gray-300' }} text-base"></i>
+                                @endfor
+                                <span class="text-sm text-gray-600">({{ $produk->reviews_count }})</span>
+                            </div>
+                            <span class="text-sm font-semibold text-gray-900">
+                                {{ number_format($produk->reviews_avg_rating, 1) }}/5
+                            </span>
+                        </div>
+
                     <div class="flex gap-3">
                         <button wire:click="addToCart({{ $produk['id'] ?? 0 }})" 
                             wire:loading.attr="disabled"

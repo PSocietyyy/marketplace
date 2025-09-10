@@ -41,7 +41,10 @@ class ProductPage extends Component
 
     public function loadProducts()
     {
-        $query = Product::with(['umkn', 'category']);
+        $query = Product::with(['umkn', 'category'])
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
+            ->where('stock', '>', '0');
 
         // Search filter
         if (!empty($this->search)) {

@@ -55,4 +55,9 @@ class Product extends Model
         return $this->hasMany(OrderItem::class)
                     ->whereHas('order', fn($q) => $q->where('status', 'completed'));
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
