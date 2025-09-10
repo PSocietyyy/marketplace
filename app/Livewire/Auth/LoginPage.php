@@ -30,6 +30,12 @@ class LoginPage extends Component
         $this->validate();
 
         if(Auth::attempt(["email" => $this->email, "password" => $this->password], $this->remember)) {
+            if(Auth::user()->isAdmin()) {
+                Log::info("Admin login", [
+                    "email" => $this->email
+                ]);
+                return redirect()->route('admin.dashboard');
+            }
             Log::info("User login", [
                 "email" => $this->email,
             ]);
