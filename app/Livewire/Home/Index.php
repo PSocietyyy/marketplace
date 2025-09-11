@@ -21,15 +21,17 @@ class Index extends Component
     
     public function mount()
     {
-        $this->umknRekomendasi = Umkn::with(['user'])
-            ->withSum(['order_items as total_product_terjual' => function ($query) {
-                $query->whereHas('order', function ($q) {
-                    $q->where('status', 'completed');
-                });
-            }], 'qty')
-            ->orderByDesc('total_product_terjual')
-            ->take(5)
-            ->get();
+        $this->umknRekomendasi = Umkn::with('user')
+        ->withSum(['order_items as total_product_terjual' => function ($query) {
+            $query->whereHas('order', function ($q) {
+                $q->where('status', 'completed');
+            });
+        }], 'qty')
+        ->whereHas('products') // hanya UMKM yang punya produk
+        ->orderByDesc('total_product_terjual')
+        ->take(3)
+        ->get();
+
 
 
             $min_rating = 3.5;

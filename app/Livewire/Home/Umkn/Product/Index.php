@@ -28,6 +28,8 @@ class Index extends Component
 
     public $categories = [];
 
+    public $canManageProduct = false;
+
     protected $queryString = [
         'search' => ['except' => ''],
         'categoryFilter' => ['except' => ''],
@@ -38,6 +40,15 @@ class Index extends Component
     public function mount()
     {
         $this->categories = Category::all();
+        $this->canManageProduct = Auth::user()->umkn->status === "approved";
+    }
+
+    protected function isCanManageProduct()
+    {
+        if(!$this->canManageProduct){
+            $this->dispatch("alert", message: "UMKN anda belum aktif", type: "warning");
+            return;
+        }
     }
 
     public function updatingSearch()
@@ -63,6 +74,7 @@ class Index extends Component
 
     public function confirmDelete($productId)
     {
+        $this->isCanManageProduct();
         $this->productToDelete = Product::find($productId);
         $this->showDeleteModal = true;
     }
@@ -109,16 +121,31 @@ class Index extends Component
 
     public function addProduct()
     {
+        $this->isCanManageProduct();
+        if($this->canManageProduct == false)
+        {
+            return;
+        }
         return redirect()->route('home.umkn.product.form.create');
     }
 
     public function editProduct($id)
     {
+        $this->isCanManageProduct();
+        if($this->canManageProduct == false)
+        {
+            return;
+        }
         return redirect()->route('home.umkn.product.form.edit', $id);
     }
 
     public function productDetail($id)
     {
+        $this->isCanManageProduct();
+        if($this->canManageProduct == false)
+        {
+            return;
+        }
         return redirect()->route('home.umkn.product.detail', $id);
     }
 

@@ -30,6 +30,8 @@ class ProductForm extends Component
 
     public $categories = [];
 
+    public $canManageProduct = false;
+
     protected $rules = [
         'product_name' => 'required|string|max:255',
         'description' => 'required|string',
@@ -48,6 +50,16 @@ class ProductForm extends Component
             $this->getDataById();
             $this->is_edit_mode = true;
         }
+        $this->canManageProduct = Auth::user()->umkn->status === "approved";
+        $this->isCanManageProduct();
+    }
+
+    protected function isCanManageProduct()
+    {
+        if(!$this->canManageProduct){
+            $this->dispatch("alert", message: "UMKN anda belum aktif", type: "warning");
+            return redirect()->route('home.umkn.product.index');
+        }
     }
 
     public function getDataById()
@@ -61,6 +73,7 @@ class ProductForm extends Component
         if($product->umkn->user->id !== Auth::id())
         {
             $this->dispatch("alert", message: "Anda bukan pemilik product ini", type: "warning");
+            return redirect()->route('home.umkn.product.index');
         }
 
         $this->product_name = $product->product_name;

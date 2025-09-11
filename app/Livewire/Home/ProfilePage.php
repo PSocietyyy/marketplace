@@ -105,7 +105,7 @@ class ProfilePage extends Component
     {
         $this->validate([
             'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'last_name' => 'nullable|string|max:255',
             'birth_date' => 'nullable|date',
             'full_name' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
@@ -193,6 +193,7 @@ class ProfilePage extends Component
 
         $this->dispatch('alert', message: 'UMKN berhasil dibuat!', type: 'success');
         $this->mount(); // Reload data
+        $this->resetpage();
     }
 
     public function updateUmkn()

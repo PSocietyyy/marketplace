@@ -42,15 +42,20 @@ class Dashboard extends Component
             ->count();
 
         // Total revenue
-        $this->totalRevenue = DB::table('orders')
-            ->where('status', 'completed')
-            ->sum('total_price');
+        $this->totalRevenue = Order::whereHas('items.product', function($q) {
+            $q->where('umkn_id', Auth::user()->umkn_id);
+        })
+        ->where('status', 'completed')
+        ->sum('total_price');
 
         // Produk dengan stok rendah (< 10)
-        $this->lowStockProducts = Product::where('stock', '<', 10)->count();
+        $this->lowStockProducts = Product::where('stock', '<', 10)->where("umkn_id", Auth::user()->umkn_id)->count();
 
         // Pesanan terbaru (5 terakhir)
         $this->recentOrders = Order::with(['user', 'items.product'])
+            ->whereHas("items.product", function($q){
+                $q->where("umkn_id", Auth::user()->umkn_id);
+            })
             ->latest()
             ->take(5)
             ->get();
@@ -69,10 +74,16 @@ class Dashboard extends Component
             return [
                 'month' => $date->format('M'),
                 'orders' => Order::whereYear('created_at', $date->year)
+                    ->whereHas("items.product", function($q) {
+                        $q->where("umkn_id", Auth::user()->umkn_id);
+                    })
                     ->whereMonth('created_at', $date->month)
                     ->count(),
                 'revenue' => Order::whereYear('created_at', $date->year)
                     ->whereMonth('created_at', $date->month)
+                    ->whereHas("items.product", function($q) {
+                        $q->where("umkn_id", Auth::user()->umkn_id);
+                    })
                     ->where('status', 'completed')
                     ->sum('total_price')
             ];

@@ -7,6 +7,7 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 #[Layout("layouts.umkn")]
 #[Title("Detail Product")]
@@ -18,6 +19,10 @@ class Detail extends Component
     public function mount($id)
     {
         $this->product = Product::with(['category', 'umkn'])->findOrFail($id);
+        if($this->product->umkn_id !== Auth::user()->umkn_id)
+        {
+            return redirect()->route('home.umkn.product.index');
+        }
     }
 
     public function toggleImageModal()

@@ -30,7 +30,6 @@
                                 {{ $product->category->name }}
                             </span>
                         @endif
-                        
                     </div>
                 </div>
 

@@ -256,7 +256,21 @@
                                 </div>
                                 <div>
                                     <h3 class="text-lg font-semibold text-gray-900">{{ $umkn_name }}</h3>
-                                    <p class="text-gray-600">UMKN {{ Auth::user()->umkn->status === 'active' ? 'Aktif' : 'Tidak Aktif' }}</p>
+                                    <p class="text-gray-600">UMKN 
+                                        @if (Auth::user()->umkn->status == "pending")
+                                            <span class="text-white font-medium text-sm bg-yellow-600 rounded-md px-2 py-1">
+                                                {{ Auth::user()->umkn->status  }}
+                                            </span>
+                                        @elseif(Auth::user()->umkn->status == "rejected")
+                                            <span class="text-white font-medium text-sm bg-red-600 rounded-md px-2 py-1">
+                                                {{ Auth::user()->umkn->status  }}
+                                            </span>
+                                        @else
+                                            <span class="text-white font-medium text-sm bg-green-600 rounded-md px-2 py-1">
+                                                {{ Auth::user()->umkn->status  }}
+                                            </span>
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
 

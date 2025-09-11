@@ -117,7 +117,7 @@
                 <div class="p-6 border-b border-gray-100">
                     <div class="flex items-center justify-between">
                         <h2 class="text-xl font-semibold text-gray-900">Pesanan Terbaru</h2>
-                        <a href="{{ route('home.order') }}" 
+                        <a href="{{ route('home.umkn.orders') }}" 
                            class="text-sm text-blue-600 hover:text-blue-800 font-medium">
                             Lihat Semua
                         </a>

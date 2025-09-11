@@ -89,7 +89,7 @@ class Dashboard extends Component
             })
             ->when($this->selectedStatus, fn($q) => $q->where('status', $this->selectedStatus))
             ->latest()
-            ->take(10)
+            ->take(4)
             ->get();
 
         // Produk terlaris global

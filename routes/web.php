@@ -25,6 +25,8 @@ Route::middleware(["auth"])->group(function() {
 
     Route::get("/profile", App\Livewire\Home\ProfilePage::class)->name("home.profile");
 
+    Route::get("/profile/umkn/{id}", App\Livewire\Home\UmknProfile::class)->name('home.profile.umkn');
+
     Route::prefix("umkn")->group(function() {
         Route::get("/", App\Livewire\Home\Umkn\Dashboard::class)->name("home.umkn.dashboard");
 
@@ -45,4 +47,7 @@ Route::prefix("admin")->as("admin.")->middleware("isAdmin")->group(function () {
     
     // Order
     Route::get("/orders", App\Livewire\Admin\OrderPage::class)->name('orders');
+
+    // Pengajuan UMKN
+    Route::get("/umkn_registrations", App\Livewire\Admin\UmknRegistrationPage::class)->name('umkn_registration');
 });

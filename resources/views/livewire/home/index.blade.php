@@ -24,7 +24,7 @@
                         <img src="{{ asset('storage/' . $umkn['logo']) }}" alt="{{ $umkn['umkn_name'] }}"
                             class="w-20 h-20 object-cover rounded-full mx-auto ring-4 ring-gray-50">
                     </div>
-                    <h3 class="text-xl font-medium mb-3 text-gray-900">{{ $umkn['umkn_name'] }}</h3>
+                    <a href="{{ route('home.profile.umkn', $umkn->id) }}" class="text-xl font-medium mb-3 text-gray-900 hover:underline underline-offset-2">{{ $umkn['umkn_name'] }}</a>
                     <p class="text-gray-600 text-sm leading-relaxed">{{ $umkn['description'] }}</p>
                     <p class="text-gray-600 text-sm leading-relaxed">
                         {{ $umkn['total_product_terjual'] > 0 ? $umkn['total_product_terjual'] : 0 }} Produk Terjual</p>

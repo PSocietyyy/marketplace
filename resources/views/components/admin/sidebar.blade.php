@@ -59,6 +59,15 @@
                     </a>
                 </li>
 
+                {{-- Manajemen Pengajuan UMKN --}}
+                <li>
+                    <a href="{{ route('admin.umkn_registration') }}" 
+                       class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 group {{ request()->routeIs('admin.umkn_registration') ? 'bg-gray-50 text-gray-900' : '' }}">
+                        <i class="ri-list-ordered text-lg mr-3 text-gray-500 group-hover:text-gray-700 {{ request()->routeIs('admin.umkn_registration') ? 'text-gray-700' : '' }}"></i>
+                        <span>Manajemen Pengajuan UMKN</span>
+                    </a>
+                </li>
+
                 
             </ul>
 
