@@ -44,7 +44,10 @@ Route::prefix("admin")->as("admin.")->middleware("isAdmin")->group(function () {
     Route::get("/", App\Livewire\Admin\Dashboard::class)->name('dashboard');
     Route::get("/products", App\Livewire\Admin\Product\Index::class)->name('product.index');
     Route::get("/products/{id}", App\Livewire\Admin\Product\Detail::class)->name('product.detail');
-    
+    Route::get("/categories", App\Livewire\Admin\Categories\Index::class)->name('categories.index');
+    Route::get("/categories/{id}/edit", App\Livewire\Admin\Categories\CategoryForm::class)->name('categories.edit');
+    Route::get("/categories/add", App\Livewire\Admin\Categories\CategoryForm::class)->name('categories.add');
+
     // Order
     Route::get("/orders", App\Livewire\Admin\OrderPage::class)->name('orders');
 

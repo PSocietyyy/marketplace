@@ -68,6 +68,15 @@
                     </a>
                 </li>
 
+                {{-- Manajemen Category  --}}
+                <li>
+                    <a href="{{ route('admin.categories.index') }}" 
+                       class="flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 group {{ request()->routeIs('admin.categories.index') ? 'bg-gray-50 text-gray-900' : '' }}">
+                        <i class="ri-list-ordered text-lg mr-3 text-gray-500 group-hover:text-gray-700 {{ request()->routeIs('admin.categories.index') ? 'text-gray-700' : '' }}"></i>
+                        <span>Manajemen Kategori</span>
+                    </a>
+                </li>
+
                 
             </ul>
 
