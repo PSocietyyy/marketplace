@@ -7,8 +7,8 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout("layouts.admin")]
-#[Title("Manjemen Category")]
+#[Layout('layouts.admin')]
+#[Title('Manjemen Category')]
 class Index extends Component
 {
     public $search = '';
@@ -18,9 +18,8 @@ class Index extends Component
     public $categoryToDelete = null;
 
     protected $queryString = [
-        'search' => ['except' => '']
+        'search' => ['except' => ''],
     ];
-
 
     public function updatingSearch()
     {
@@ -35,9 +34,15 @@ class Index extends Component
 
     public function deleteCategory()
     {
-        if($this->categoryToDelete) {
+        if ($this->categoryToDelete) {
+            if ($this->categoryToDelete->products()->exists()) {
+                $this->dispatch('alert', message: 'Kategori tidak bisa dihapus karena masih ada produk yang terkait', type: 'error');
+                $this->showDeleteModal = false;
+                $this->categoryToDelete = null;
+                return;
+            }
             $this->categoryToDelete->delete();
-            $this->dispatch("alert", message: "Kategori berhasil dihapus", type: "success");
+            $this->dispatch('alert', message: 'Kategori berhasil dihapus', type: 'success');
             $this->showDeleteModal = false;
             $this->categoryToDelete = null;
         }
@@ -54,7 +59,7 @@ class Index extends Component
         $query = Category::query();
 
         if ($this->search) {
-            $query->where('name', 'like', '%'.$this->search.'%');
+            $query->where('name', 'like', '%' . $this->search . '%');
         }
 
         return $query->paginate($this->perPage);
@@ -65,11 +70,21 @@ class Index extends Component
         $this->reset(['search']);
     }
 
+    public function editCategory($id)
+    {
+        return redirect()->route('admin.categories.edit', $id);
+    }
+
+    public function addCategory()
+    {
+        return redirect()->route('admin.categories.add');
+    }
+
     public function render()
     {
         $categories = $this->getCategories();
         return view('livewire.admin.categories.index', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 }
